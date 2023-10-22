@@ -321,6 +321,47 @@ print('After if block')
 print("x=", x)
 print("y=", y)
 
+#Python11
+#Classes: They have similar advantages to the functions, they make our functions easier to read. It sets a list of rules for creating a new custom object, everytime I use classes I will create an instance of a type of an object. I.e., let's use the #open function to create two instances of a file object. 
+#		fa_input = open("somedata.fa")
+#		gff_input = open("somedata.gff")
+
+#Let's create a class DNArecord and define series of rules that DNARecord object must follow
+# Start w class, then the name of your class, them the name of the base class in () object
+class DNARecord(object):
+
+#define class attributes
+  sequence = 'ACGTAGCTGACGATC' 
+  gene_name = 'ABC1'
+  species_name = 'Drosophila melanogaster'
+  
+#define methods
+  def reverse_complement(self): 
+    replacement1 = self.sequence.replace('A', 't') 
+    replacement2 = replacement1.replace('T', 'a')
+    replacement3 = replacement2.replace('C', 'g')
+    replacement4 = replacement3.replace('G', 'c') 
+    reverse_comp = replacement4[::-1]
+    return reverse_comp.upper()
+  
+  def get_AT(self): 
+    length = len(self.sequence)
+    a_count = self.sequence.count('A') 
+    t_count = self.sequence.count('T') 
+    at_content = (a_count + t_count) / length 
+    return at_content
+
+###END of CLASS DNARecord ###
+
+
+### Outside class defintion ###
+## Create a new DNARecord Object
+dna_rec_obj = DNARecord() 
+
+## Use New DNARecord object
+print('Created a record for ' + dna_rec_obj.gene_name + ' from ' + dna_rec_obj.species_name) 
+print('AT is ' + str(dna_rec_obj.get_AT()))
+print('complement is ' + dna_rec_obj.reverse_complement())
 
 
 
