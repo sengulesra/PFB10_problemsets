@@ -547,3 +547,369 @@ for kmer, count in kmer_counts.items():
 #XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Last login: Tue Oct 24 11:08:50 on ttys001
+(base) pfb10@info10 ~ % cd CSHLProgForBio 
+(base) pfb10@info10 CSHLProgForBio % CD eXERCISE-
+/usr/bin/CD: line 4: cd: eXERCISE-: No such file or directory
+(base) pfb10@info10 CSHLProgForBio % cd Exercise-counting_kmers 
+(base) pfb10@info10 Exercise-counting_kmers % vi fastq_file_to_sequence_list.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  1 #!/usr/bin/env python
+  2 
+  3 import os, sys
+  4 
+  5 
+  6 #  Retrieve the sequences from fastq file
+  7 ## method: seq_list_from_fastq_file(fastq_filename)
+  8 ##
+  9 ##  Extracts the sequence lines from a fastq file and returns a list
+ 10 ##  of the sequence lines
+ 11 ##
+ 12 ##  input parameters:
+ 13 ##
+ 14 ##  fastq_filename :  name of the fastq file (type: string)
+ 15 ##
+ 16 ##  returns seq_list : list of read sequences.
+ 17 ##                    ie.  ["GATCGCATAG", "CGATGCAG", ...]
+ 18 
+ 19 def seq_list_from_fastq_file(fastq_filename):
+ 20 
+ 21     seq_list = list()
+ 22 
+ 23     #
+ 24     seq_list = sys.argv[1]
+ 25     print('fastq_filename', seq_list)
+ 26     
+ 27  
+ 28  
+ 29     #
+ 30     return seq_list
+ 31     
+ 32 def main():
+ 33 
+ 34     progname = sys.argv[0]
+ 35     
+ 36     usage = "\n\n\tusage: {} filename.fastq num_seqs_show\n\n\n".format(prog    name)
+ 37     
+ 38     if len(sys.argv) < 3:
+ 39         sys.stderr.write(usage)
+ 40         sys.exit(1)
+ 41         
+ 42     # capture command-line arguments
+ 43     fastq_filename = sys.argv[1]
+ 44     num_seqs_show = int(sys.argv[2])
+ 45     
+ 46     seq_list = seq_list_from_fastq_file(fastq_filename)
+ 47     
+ 48     print(seq_list[0:num_seqs_show])
+ 49     
+ 50     sys.exit(0)  # always good practice to indicate worked ok!
+ 51     
+ 52     
+ 53     
+ 54 if __name__ == '__main__':
+ 55     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Last login: Tue Oct 24 11:16:28 on ttys003
+(base) pfb10@info10 ~ % cd CSHLProgForBio 
+(base) pfb10@info10 CSHLProgForBio % cd Exercise-counting_kmers 
+(base) pfb10@info10 Exercise-counting_kmers % vi sequence_to_kmer_list.py 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  1 #!/usr/bin/env python
+  2 
+  3 import os, sys
+  4 
+  5 
+  6 
+  7 ## method: sequence_to_kmer_list(sequence, kmer_length)
+  8 ##
+  9 ##  Extracts all kmers of a specified length from a sequence
+ 10 ##
+ 11 ##  ie.  sequence: GATCGATCGATCGA
+ 12 ##   and given kmer_length = 4
+ 13 ##   would yield
+ 14 ##                 GATC
+ 15 ##                  ATCG
+ 16 ##                   TCGA
+ 17 ##                    .... and so forth
+ 18 ##                       
+ 19 ##  input parameters:
+ 20 ##
+ 21 ##  seuqence : nucleotide sequence (type: string)
+ 22 ##
+ 23 ##  returns kmer_list : list of kmer sequences.
+ 24 ##                    ie.  ["GATC", "ATCG", ...]
+ 25 
+ 26 def sequence_to_kmer_list(sequence, kmer_length):
+ 27 
+ 28     kmers_list = list()
+ 29 
+ 30     ## begin your code
+ 31 
+ 32 
+ 33 
+ 34 
+ 35 
+ 36     ## end your code
+ 37 
+ 38     return kmers_list
+ 39 
+ 40 
+ 41 
+ 42 def main():
+ 43 
+ 44     progname = sys.argv[0]
+ 45 
+ 46     usage = "\n\n\tusage: {} sequence kmer_length\n\n\n".format(progname)
+ 47 
+ 48     if len(sys.argv) < 3:
+ 49         sys.stderr.write(usage)
+ 50         sys.exit(1)
+ 51 
+ 52     # capture command-line arguments
+ 53     sequence = sys.argv[1]
+ 54     kmer_length = int(sys.argv[2])
+ 55 
+ 56     kmers  = sequence_to_kmer_list(sequence, kmer_length)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Last login: Mon Oct 23 20:40:41 on ttys001
+(base) pfb10@info10 ~ % ls 
+CSHLProgForBio			Library				README.md			ngs
+D_melanogaster_genomic.fna	Movies				canu-2.2			pacbio.fastq
+Desktop				Music				canu-2.2.DArwin-amd64.tar.xz	pfb2023
+Documents			Pictures			jay_install.sh			problemsets
+Downloads			Public				miniconda3			pythonproblemset2.py
+(base) pfb10@info10 ~ % cd /Users/pfb10/CSHLProgForBio/Exercise-counting_kmers
+(base) pfb10@info10 Exercise-counting_kmers % vi count_kmers_from_fastq.py 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  1 #!/usr/bin/env python
+  2 
+  3 import os, sys
+  4 
+  5 from sequence_to_kmer_list import *
+  6 from fastq_file_to_sequence_list import *
+  7 
+  8 
+  9 ## method: count_kmers(kmer_list)
+ 10 ##
+ 11 ##  Counts the frequency of each kmer in the given list of kmers
+ 12 ##
+ 13 ##  input parameters:
+ 14 ##
+ 15 ##  kmer_list : list of kmers (type: list)
+ 16 ##               ie.  ["GATC", "TCGA", "GATC", ...]
+ 17 ##
+ 18 ##
+ 19 ##  returns kmer_counts_dict : dict containing ( kmer : count )
+ 20 ##                    ie.  {  "GATC" : 2,
+ 21 ##                            "TCGA" : 1,
+ 22 ##                             ...       }
+ 23 
+ 24 
+ 25 def count_kmers(kmer_list):
+ 26 
+ 27     kmer_count_dict = dict()
+ 28 
+ 29     ##################
+ 30     ## Step 2:
+ 31     ## begin your code
+ 32 
+ 33 
+ 34 
+ 35 
+ 36 
+ 37 
+ 38     ## end your code
+ 39     ################
+ 40 
+ 41     return kmer_count_dict
+ 42 
+ 43 
+ 44 def main():
+ 45 
+ 46     progname = sys.argv[0]
+ 47 
+ 48     usage = "\n\n\tusage: {} filename.fastq kmer_length num_top_kmers_sho    w\n\n\n".format(
+ 49         progname
+ 50     )
+ 51 
+ 52     if len(sys.argv) < 4:
+ 53         sys.stderr.write(usage)
+ 54         sys.exit(1)
+ 55 
+ 56     # capture command-line arguments
+ 57     fastq_filename = sys.argv[1]
+ 58     kmer_length = int(sys.argv[2])
+ 59     num_top_kmers_show = int(sys.argv[3])
+-- INSERT --
+
+
+
+
+
+
+
+
+
+
