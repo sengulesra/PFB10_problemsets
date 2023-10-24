@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+#reg eercises: https://regexr.com
+
+
 #In terminal/ interpreter, type python3 to start coding in python. 
 import sys
 print("Hello, PFB!")
@@ -912,4 +916,27 @@ Downloads			Public				miniconda3			pythonproblemset2.py
 
 
 
+
+
+import sys
+
+# Step 1: Populate 'all_kmers' list with k-mers from all sequences
+all_kmers = []
+# You need to have a way to obtain k-mers from your sequences and add them to all_kmers.
+# Assuming you have a list of sequences named 'sequences', you can extract k-mers like this:
+for sequence in sequences:
+    for i in range(len(sequence) - kmer_length + 1):
+        kmer = sequence[i:i + kmer_length]
+        all_kmers.append(kmer)
+
+# Step 3: Sort 'unique_kmers' by abundance in descending order
+sorted_kmers = sorted(unique_kmers, key=lambda kmer: kmer_count_dict[kmer], reverse=True)
+
+# Printing the num top kmers to show
+top_kmers_show = sorted_kmers[:num_top_kmers_show]
+
+for kmer in top_kmers_show:
+    print("{}: {}".format(kmer, kmer_count_dict[kmer])
+
+sys.exit(0)  # Always good practice to indicate that the program worked successfully.
 
