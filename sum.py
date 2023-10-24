@@ -368,5 +368,182 @@ print('complement is ' + dna_rec_obj.reverse_complement())
 
 
 
+#some stuff that will help with the assembly problems
+
+import os
+
+
+for bin_lower in range(100,1000,100):
+    bin_upper = bin_lower + 99
+    bin_folder_name = str(bin_lower) + "_" + str(bin_upper)
+    os.mkdir(bin_folder_name)
+
+def process_sequence(line, number):
+    dna = line.rstrip("\n")
+    length = len(dna)
+    print("sequence length is " + str(length))
+    for bin_lower in range(100,1000,100):
+        bin_upper = bin_lower + 99
+        if length >= bin_lower and length < bin_upper:
+            print("bin is " + str(bin_lower) + " to " + str(bin_upper))
+            bin_folder_name = str(bin_lower) + "_" + str(bin_upper)
+            output_path = bin_folder_name + '/' + str(seq_number) + '.dna'
+            output = open(output_path, "w")
+            output.write(dna)
+            output.close()
+
+seq_number = 1
+for file_name in os.listdir("."):
+    if file_name.endswith(".dna"):
+        print("reading sequences from " + file_name)
+        dna_file = open(file_name)
+        for line in dna_file:
+            process_sequence(line, seq_number)
+            seq_number = seq_number+1    
+
+
+
+
+
+
+#!/usr/bin/env python3
+  #class ContigObject(object):
+ # sequence = import(ecoli_0.25.contigs.fasta)
+  #def contig_number(self):
+  #contig_nu = len(self.sequence)
+  #return contig_number
+
+
+gencode = {
+    'ATA':'I', 'ATC':'I', 'ATT':'I', 'ATG':'M',
+    'ACA':'T', 'ACC':'T', 'ACG':'T', 'ACT':'T',
+    'AAC':'N', 'AAT':'N', 'AAA':'K', 'AAG':'K',
+    'AGC':'S', 'AGT':'S', 'AGA':'R', 'AGG':'R',
+    'CTA':'L', 'CTC':'L', 'CTG':'L', 'CTT':'L',
+    'CCA':'P', 'CCC':'P', 'CCG':'P', 'CCT':'P',
+    'CAC':'H', 'CAT':'H', 'CAA':'Q', 'CAG':'Q',
+    'CGA':'R', 'CGC':'R', 'CGG':'R', 'CGT':'R',
+    'GTA':'V', 'GTC':'V', 'GTG':'V', 'GTT':'V',
+    'GCA':'A', 'GCC':'A', 'GCG':'A', 'GCT':'A',
+    'GAC':'D', 'GAT':'D', 'GAA':'E', 'GAG':'E',
+    'GGA':'G', 'GGC':'G', 'GGG':'G', 'GGT':'G',
+    'TCA':'S', 'TCC':'S', 'TCG':'S', 'TCT':'S',
+    'TTC':'F', 'TTT':'F', 'TTA':'L', 'TTG':'L',
+    'TAC':'Y', 'TAT':'Y', 'TAA':'_', 'TAG':'_',
+    'TGC':'C', 'TGT':'C', 'TGA':'_', 'TGG':'W'}
+
+def translate_dna(dna):
+    last_codon_start = len(dna) - 2
+    protein = ""
+    for start in range(0,last_codon_start,3):
+        codon = dna[start:start+3]
+        aa = gencode.get(codon, 'X')
+        protein = protein + aa
+    return protein
+
+# input sequence is easy
+assert(translate_dna("ATGTTCGGT")) == "MFG"
+
+# input sequence has incomplete codons at the end
+assert(translate_dna("ATCGATCGAT")) == "IDR"
+
+# input sequence contains N
+assert(translate_dna("ACGANCGAT")) == "TXD" 
+
+
+
+#XXXXXXXXXXXXXXXXXXXXX
+
+from __future__ import division
+
+def get_aa_percentage(protein, aa):
+	protein = protein.upper()
+	aa = aa.upper()
+	aa_count = protein.count(aa)
+	protein_length = len(protein)
+	percentage = aa_count * 100 / protein_length
+	return percentage
+
+assert get_aa_percentage("MSRSLLLRFLLFLLLLPPLP", "M") == 5
+assert get_aa_percentage("MSRSLLLRFLLFLLLLPPLP", "r") == 10
+assert get_aa_percentage("msrslllrfllfllllpplp", "L") == 50
+assert get_aa_percentage("MSRSLLLRFLLFLLLLPPLP", "Y") == 0
+
+
+
+#XXXXXXXXXXXXXXXXXXXXXX
+
+
+dna = "AATGATGAACGAC"
+bases = ['A','T','G','C']
+all_counts = {}
+for base1 in bases:
+    for base2 in bases:
+        dinucleotide = base1 + base2
+        count = dna.count(dinucleotide)
+        if count > 0:
+            all_counts[dinucleotide] = count
+
+#XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+
+dna = "AATGATGAACGAC"
+dinucleotides = ['AA','AT','AG','AC',
+                 'TA','TT','TG','TC',
+                 'GA','GT','GG','GC',
+                  'CA','CT','CG','CT']
+all_counts = []
+for dinucleotide in dinucleotides:
+    count = dna.count(dinucleotide)
+    print("count is " + str(count) + " for " + dinucleotide)
+    all_counts.append(count)
+print(all_counts)
+
+
+
+
+#XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+import os
+import sys
+
+# convert command line arguments to variables
+kmer_size = int(sys.argv[1])
+count_cutoff = int(sys.argv[2])
+
+# define the function to split dna
+def split_dna(dna, kmer_size):
+    kmers = []
+    for start in range(0,len(dna)-(kmer_size-1),1):
+        kmer = dna[start:start+kmer_size]
+        kmers.append(kmer)
+    return kmers
+
+# create an empty dictionary to hold the counts
+kmer_counts = {}
+
+# process each file with the right name
+for file_name in os.listdir("."):
+    if file_name.endswith(".dna"):
+        dna_file = open(file_name)
+
+        # process each DNA sequence in a file
+        for line in dna_file:
+            dna = line.rstrip("\n")
+
+            # increase the count for each k-mer that we find
+            for kmer in split_dna(dna, kmer_size):
+                current_count = kmer_counts.get(kmer, 0)
+                new_count = current_count + 1
+                kmer_counts[kmer] = new_count
+
+# print k-mers whose counts are above the cutoff
+for kmer, count in kmer_counts.items():
+    if count > count_cutoff:
+        print(kmer + " : " + str(count))
+
+
+
+#XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 
